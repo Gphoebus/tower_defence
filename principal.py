@@ -1,4 +1,10 @@
-﻿import pygame
+﻿"""
+Tower defence made by phoebus brain
+programation POO
+Touche T pour pouvoir poser une tour
+
+"""
+import pygame
 from pygame.locals import *
 from tour import Tour
 from pion import Pion
@@ -15,7 +21,7 @@ clock = pygame.time.Clock()                         # Démarrage de timer
 #tour2=Tour(710,470,gameDisplay)                     # création d une tour
 troll=Pion(16,278,gameDisplay)                      # création d un troll
 boulets = []                                        # liste des boulets vide au départ
-les_explosions =[]
+#les_explosions =[]
 tours = []
 une_tour = Tour(0,0,gameDisplay)
 
@@ -71,11 +77,12 @@ while not fin:                                      # boulcle du jeu
                 boulets_a_detruire.append(i)    # si le boulet es mort l'ajouter à la liste des boulets à enlever
 
     # --- parcour de la liste des boulets à détruire
+
     for j in boulets_a_detruire:
         leboulet =boulets[j]
-        les_explosions.append(Explode(leboulet.x,leboulet.y,gameDisplay))
+        #les_explosions.append(Explode(leboulet.x,leboulet.y,gameDisplay))
         boulets.remove(boulets[j])              # suppression du boulet de la liste des boulets
-
+    """
     explosions_a_detruire=[]
     for k in range(len(les_explosions)):
         lexplosion = les_explosions[k]
@@ -85,7 +92,7 @@ while not fin:                                      # boulcle du jeu
 
     for l in explosions_a_detruire:
         les_explosions.remove(les_explosions[l])
-
+    """
 
 
 

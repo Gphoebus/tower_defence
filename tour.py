@@ -7,6 +7,7 @@ class Tour(object):
     position_y=0
     def __init__(self,pos_x,pos_y, lecran):
         self.tour_image = pygame.image.load("tour.png")
+        self.tour_image= pygame.transform.scale(self.tour_image,(36,65))
         self.x = pos_x
         self.y=pos_y
         self.ecran = lecran
