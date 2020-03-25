@@ -9,7 +9,7 @@ from pygame.locals import *
 from tour import Tour
 from pion import Pion
 from boulet import Boulet
-from explode import Explode
+
 
 pygame.init()                                       # initialisation de pygame
 gameDisplay = pygame.display.set_mode((800,600))    # Création de la fenetre de jeu
@@ -38,7 +38,7 @@ while not fin:                                      # boulcle du jeu
 
             if mode=="normal":
                 posSouris = pygame.mouse.get_pos()  # Récupérer la position du pointeur
-                boulets.append(Boulet(20,20,posSouris[0],posSouris[1],gameDisplay))
+                boulets.append(Boulet(400,300,posSouris[0],posSouris[1],gameDisplay))
             elif mode=="tour":
                 posSouris = pygame.mouse.get_pos()  # Récupérer la position du pointeur
                 tours.append(Tour(posSouris[0],posSouris[1],gameDisplay) )
@@ -67,6 +67,9 @@ while not fin:                                      # boulcle du jeu
 
     for t in tours:
         t.affiche()
+        t.rayon(troll)
+           # boulets.append(Boulet(t.x,t.y,troll.x,troll.y,gameDisplay))
+
 
     boulets_a_detruire = []                     # liste des boulets a détruire
     for i in range(len(boulets)):               # parcour de la liste des boulets

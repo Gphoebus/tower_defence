@@ -2,6 +2,7 @@
 import pygame
 import time
 import numpy as np
+import math
 
 class Boulet(object):
     pygame.init()
@@ -17,13 +18,17 @@ class Boulet(object):
     def __init__(self,pos_x,pos_y, arrive_x,arrive_y,lecran):
         self.perso_image = pygame.image.load("boulet.png")
         self.perso_image = pygame.transform.scale(self.perso_image,(15,15))
+
         self.depart = np.array([pos_x,pos_y], dtype=np.float)
         self.arrive = np.array([arrive_x,arrive_y], dtype=np.float)
 
-        self.direction =np.array([0,0], dtype=np.float)
+        self.direction = self.depart-self.arrive
+        self.direction = -self.direction
+        norm=np.linalg.norm(self.direction, ord=1)
+        self.direction=self.direction/norm
 
-        lengths=np.linalg.norm(self.arrive, axis=-1)
-        self.direction[lengths > 0] = self.arrive[lengths > 0] / lengths[lengths > 0][:, np.newaxis]
+        #lengths=np.linalg.norm(self.arrive, axis=-1)
+        #self.direction[lengths > 0] = self.arrive[lengths > 0] / lengths[lengths > 0][:, np.newaxis]
 
         self.position_x = pos_x
         self.position_y=pos_y
