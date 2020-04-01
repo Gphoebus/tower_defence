@@ -104,7 +104,7 @@ class Boulet(object):
 
     def control_duree_explosion(self):
         arrive =int(time.time()*1000.0)
-        if (arrive-self.depart_time>=100):
+        if (arrive-self.depart_time>=50):
             self.j+=1
             self.depart_time=int(time.time()*1000.0)
             if (self.j>24):

@@ -1,15 +1,20 @@
 ﻿# Créé par phoebus, le 17/03/2020 en Python 3.4
 import pygame
+import numpy as np
 
 class Pion(object):
     pygame.init()
     position_x=0
     position_y=0
-    def __init__(self,pos_x,pos_y, lecran):
+    def __init__(self,pos_x,pos_y, lecran,fond):
         self.perso_image = pygame.image.load("perso.png")
         self.perso_image = pygame.transform.scale(self.perso_image,(20,40))
         self.position_x = pos_x
         self.position_y = pos_y
+
+        self.x -= self.perso_image.get_width()/2
+        self.y -= self.perso_image.get_height()/2
+
         self.ecran = lecran
 
     @property

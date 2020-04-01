@@ -19,17 +19,21 @@ clock = pygame.time.Clock()                         # Démarrage de timer
 
 #tour1 =Tour(10,10,gameDisplay)                      # création d une tour
 #tour2=Tour(710,470,gameDisplay)                     # création d une tour
-troll=Pion(16,278,gameDisplay)                      # création d un troll
+                      # création d un troll
 boulets = []                                        # liste des boulets vide au départ
 #les_explosions =[]
 tours = []
 une_tour = Tour(0,0,gameDisplay)
+image_fond = pygame.image.load("fond.png")
+
+troll=Pion(16,142,gameDisplay,image_fond)
 
 fin = False
 
 mode = "normal"
 
 while not fin:                                      # boulcle du jeu
+
 
     for event in pygame.event.get():                # traitement des evenements
         if event.type == QUIT:
@@ -39,19 +43,33 @@ while not fin:                                      # boulcle du jeu
             if mode=="normal":
                 posSouris = pygame.mouse.get_pos()  # Récupérer la position du pointeur
                 boulets.append(Boulet(400,300,posSouris[0],posSouris[1],gameDisplay))
+
             elif mode=="tour":
                 posSouris = pygame.mouse.get_pos()  # Récupérer la position du pointeur
-                tours.append(Tour(posSouris[0],posSouris[1],gameDisplay) )
-                mode = "normal"
+                c = image_fond.get_at((posSouris[0],posSouris[1]))
+                if (c[0]==0 and c[1]==255 and c[2]==0):
+                    print(c)
+                    tours.append(Tour(posSouris[0],posSouris[1],gameDisplay) )
+                    mode = "normal"
         elif event.type == KEYDOWN and event.key == K_t:
             mode="tour"
+        elif event.type == KEYDOWN and event.key == K_c:
+            mode="couleur"
         else:
             if mode=="tour":
                 posSouris = pygame.mouse.get_pos()  # Récupérer la position du pointeur
                 une_tour.x=posSouris[0]
                 une_tour.y=posSouris[1]
                 une_tour.affiche()
+            elif mode=="couleur":
+                posSouris = pygame.mouse.get_pos()  # Récupérer la position du pointeur
+                c = image_fond.get_at((posSouris[0],posSouris[1]))
+                print (c)
+
+
+
         pygame.display.update()
+
 
 
 
@@ -60,6 +78,7 @@ while not fin:                                      # boulcle du jeu
     #print (pressed)
     clock.tick(60)                                  # Réglage fps 60 img/s
     gameDisplay.fill((0,0,0))                       # mise a jour du fond
+    gameDisplay.blit(image_fond,(0,0))
 
     #tour1.affiche()
     #tour2.affiche()
@@ -96,9 +115,6 @@ while not fin:                                      # boulcle du jeu
     for l in explosions_a_detruire:
         les_explosions.remove(les_explosions[l])
     """
-
-
-
 
 
     pygame.display.update()                         # Mise a jour de l'affichage

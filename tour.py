@@ -18,6 +18,10 @@ class Tour(object):
         self.x = pos_x
         self.y=pos_y
         self.ecran = lecran
+        self.depart_time =int(time.time()*1000.0)
+
+        self.x -= self.tour_image.get_width()/2
+        self.y -= self.tour_image.get_height()/2
 
     @property
     def x(self):
@@ -45,15 +49,34 @@ class Tour(object):
         self.affiche_boulet()
 
     def affiche_boulet(self):
+        """
+        boulets_a_detruire = []
         for b in self.boulets:
             b.affiche()
+            if (b.isenvie==False):
+                boulets.remove(b)
+        """
+        boulets_a_detruire = []                     # liste des boulets a détruire
+        for i in range(len(self.boulets)):               # parcour de la liste des boulets
+            if (len(self.boulets)>0):                    # Si la liste n est pas vide
+                leboulet = self.boulets[i]               # Extraction d'un boulet de la liste des boulets
+                leboulet.affiche()                  # Affichage du boulet extrait
+                if (leboulet.isenvie==False):       # verification si le boulet est en vie
+                    boulets_a_detruire.append(i)    # si le boulet es mort l'ajouter à la liste des boulets à enlever
+
+        # --- parcour de la liste des boulets à détruire
+
+        for j in boulets_a_detruire:
+            leboulet =self.boulets[j]
+            #les_explosions.append(Explode(leboulet.x,leboulet.y,gameDisplay))
+            self.boulets.remove(self.boulets[j])              # suppression du boulet de la liste des boulets
 
     def rayon(self,lepion):
-        if (self.nb_boulets_lance<self.nb_max_boulets):
+        if (len(self.boulets)<self.nb_max_boulets):
             x=self.x
             y=self.y
-#
-            print("tour",x,y)
+
+            #print("tour",x,y)
             px=lepion.x
             py=lepion.y
 
@@ -65,9 +88,12 @@ class Tour(object):
             dist = ((dx*dx)+(dy*dy))**(1/2)
 
             if (dist<=self.perimetre):
-
-                self.boulets.append(Boulet(x,y,px,py,self.ecran))
-                self.nb_boulets_lance+=1
-                print("Un boulet de plus")
+                arrive =int(time.time()*1000.0)
+                if (arrive-self.depart_time>=self.cadence):
+                    print("arrive = {} , depart = {} , difference {}".format(arrive,self.depart_time,arrive-self.depart_time))
+                    self.boulets.append(Boulet(x,y,px,py,self.ecran))
+                    self.nb_boulets_lance+=1
+                    print("Un boulet de plus")
+                    self.depart_time=int(time.time()*1000.0)
 
 
